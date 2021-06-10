@@ -3,7 +3,7 @@ name: unit-test
 on:
   pull_request:
     paths:
-      - ./**/*.go
+      - "**/*.go"
       - .github/workflows/unit-test.yml
 
 jobs:

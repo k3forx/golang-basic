@@ -3,8 +3,7 @@ package main
 import "log"
 
 func main() {
-	var myString string
-	myString = "Green"
+	myString := "Green"
 
 	log.Println("myString is set to", myString)
 	changeUsingPointer(&myString) // Can get pointer of "myString" with "&"
