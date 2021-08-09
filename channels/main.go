@@ -1,36 +1,26 @@
 package main
 
 import (
-	"log"
-	"math/rand"
+	"fmt"
 	"time"
 )
 
-const numPool = 1000
+func say(c chan bool) {
+	for i := 0; i < 5; i++ {
+		time.Sleep(1000 * time.Millisecond)
+		fmt.Println(i)
+	}
 
-func PrintText(s string) {
-	log.Println(s)
-}
-
-func RandomNumber(n int) int {
-	rand.Seed(time.Now().UnixNano())
-	value := rand.Intn(n)
-	return value
-}
-
-func CalculateValue(initChan chan int) {
-	randomNumber := RandomNumber(numPool)
-	initChan <- randomNumber
+	c <- true // this is required to wait to finished all routines
 }
 
 func main() {
-	PrintText("Hi")
+	channel := make(chan bool)
 
-	initChan := make(chan int)
-	defer close(initChan)
+	fmt.Println("start go routine")
+	go say(channel)
+	fmt.Println("end go routine")
 
-	go CalculateValue(initChan) // Channels are convenient way to pass values from one package to another package
-
-	num := <-initChan
-	log.Println(num)
+	b := <-channel
+	fmt.Println(b)
 }
